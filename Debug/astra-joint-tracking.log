@@ -1,0 +1,63 @@
+﻿  stdafx.cpp
+  CAstraStream.cpp
+c:\users\dinok\desktop\astra-joint-tracking-master\astra-joint-tracking\castrastream.cpp(91): warning C4018: '<': signed/unsigned mismatch
+c:\users\dinok\desktop\astra-joint-tracking-master\astra-joint-tracking\castrastream.cpp(98): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+  main.cpp
+c:\users\dinok\desktop\astra-joint-tracking-master\astra-joint-tracking\main.cpp(303): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\dinok\desktop\astra-joint-tracking-master\astra-joint-tracking\main.cpp(304): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\dinok\desktop\astra-joint-tracking-master\astra-joint-tracking\main.cpp(354): warning C4018: '<': signed/unsigned mismatch
+c:\users\dinok\desktop\astra-joint-tracking-master\astra-joint-tracking\main.cpp(440): warning C4018: '<': signed/unsigned mismatch
+  CStreamListener.cpp
+  Generating Code...
+CAstraStream.obj : error LNK2019: unresolved external symbol __imp__astra_frame_get_bodyframe referenced in function "public: static class astra::BodyFrame __cdecl astra::BodyFrame::acquire<class astra::BodyFrame>(struct _astra_reader_frame *,int)" (??$acquire@VBodyFrame@astra@@@BodyFrame@astra@@SA?AV01@PAU_astra_reader_frame@@H@Z)
+CStreamListener.obj : error LNK2001: unresolved external symbol __imp__astra_frame_get_bodyframe
+CAstraStream.obj : error LNK2019: unresolved external symbol __imp__astra_bodyframe_get_frameindex referenced in function "private: __thiscall astra::BodyFrame::BodyFrame(struct _astra_bodyframe *)" (??0BodyFrame@astra@@AAE@PAU_astra_bodyframe@@@Z)
+CStreamListener.obj : error LNK2001: unresolved external symbol __imp__astra_bodyframe_get_frameindex
+CAstraStream.obj : error LNK2019: unresolved external symbol __imp__astra_reader_get_imageframe referenced in function "public: static class astra::PointFrame __cdecl astra::ImageFrame<struct astra::Vector3f,7>::acquire<class astra::PointFrame>(struct _astra_reader_frame *,int)" (??$acquire@VPointFrame@astra@@@?$ImageFrame@UVector3f@astra@@$06@astra@@SA?AVPointFrame@1@PAU_astra_reader_frame@@H@Z)
+CAstraStream.obj : error LNK2019: unresolved external symbol __imp__astra_imageframe_get_frameindex referenced in function "public: __thiscall astra::ImageFrame<struct astra::Vector3f,7>::ImageFrame<struct astra::Vector3f,7>(struct _astra_imageframe *,unsigned int)" (??0?$ImageFrame@UVector3f@astra@@$06@astra@@QAE@PAU_astra_imageframe@@I@Z)
+CAstraStream.obj : error LNK2019: unresolved external symbol __imp__astra_imageframe_get_data_ptr referenced in function "public: __thiscall astra::ImageFrame<struct astra::Vector3f,7>::ImageFrame<struct astra::Vector3f,7>(struct _astra_imageframe *,unsigned int)" (??0?$ImageFrame@UVector3f@astra@@$06@astra@@QAE@PAU_astra_imageframe@@I@Z)
+CAstraStream.obj : error LNK2019: unresolved external symbol __imp__astra_imageframe_get_metadata referenced in function "public: __thiscall astra::ImageFrame<struct astra::Vector3f,7>::ImageFrame<struct astra::Vector3f,7>(struct _astra_imageframe *,unsigned int)" (??0?$ImageFrame@UVector3f@astra@@$06@astra@@QAE@PAU_astra_imageframe@@I@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutInitWindowPosition@8 referenced in function "void __cdecl setDrawing(int *,char * *)" (?setDrawing@@YAXPAHPAPAD@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutInitWindowSize@8 referenced in function "void __cdecl setDrawing(int *,char * *)" (?setDrawing@@YAXPAHPAPAD@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutInitDisplayMode@4 referenced in function "void __cdecl setDrawing(int *,char * *)" (?setDrawing@@YAXPAHPAPAD@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutMainLoop@0 referenced in function "void __cdecl setDrawing(int *,char * *)" (?setDrawing@@YAXPAHPAPAD@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutPostRedisplay@0 referenced in function "void __cdecl Timer(int)" (?Timer@@YAXH@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutSwapBuffers@0 referenced in function "void __cdecl Draw(void)" (?Draw@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp__glutTimerFunc@12 referenced in function "void __cdecl Timer(int)" (?Timer@@YAXH@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutKeyboardFunc@4 referenced in function "void __cdecl setDrawing(int *,char * *)" (?setDrawing@@YAXPAHPAPAD@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutReshapeFunc@4 referenced in function "void __cdecl setDrawing(int *,char * *)" (?setDrawing@@YAXPAHPAPAD@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutDisplayFunc@4 referenced in function "void __cdecl setDrawing(int *,char * *)" (?setDrawing@@YAXPAHPAPAD@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__glutGet@4 referenced in function "void __cdecl Initialize(void)" (?Initialize@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp____glutInitWithExit@12 referenced in function _glutInit_ATEXIT_HACK@8
+main.obj : error LNK2019: unresolved external symbol __imp____glutCreateWindowWithExit@8 referenced in function _glutCreateWindow_ATEXIT_HACK@4
+main.obj : error LNK2019: unresolved external symbol __imp__glutLeaveMainLoop@0 referenced in function "void __cdecl Timer(int)" (?Timer@@YAXH@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_initialize referenced in function "enum astra_status_t __cdecl astra::initialize(void)" (?initialize@astra@@YA?AW4astra_status_t@@XZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_terminate referenced in function "enum astra_status_t __cdecl astra::terminate(void)" (?terminate@astra@@YA?AW4astra_status_t@@XZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_streamset_open referenced in function "public: void __thiscall astra::StreamSet::StreamSetRef::connect(void)" (?connect@StreamSetRef@StreamSet@astra@@QAEXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_streamset_close referenced in function "public: __thiscall astra::StreamSet::StreamSetRef::~StreamSetRef(void)" (??1StreamSetRef@StreamSet@astra@@QAE@XZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_reader_create referenced in function "public: class astra::StreamReader __thiscall astra::StreamSet::create_reader(void)" (?create_reader@StreamSet@astra@@QAE?AVStreamReader@2@XZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_reader_destroy referenced in function "public: __thiscall astra::StreamReader::ReaderRef::~ReaderRef(void)" (??1ReaderRef@StreamReader@astra@@QAE@XZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_reader_get_stream referenced in function "public: class astra::BodyStream __thiscall astra::StreamReader::stream<class astra::BodyStream>(int)" (??$stream@VBodyStream@astra@@@StreamReader@astra@@QAE?AVBodyStream@1@H@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_stream_get_description referenced in function "public: __thiscall astra::DataStream::DataStream(struct _astra_streamconnection *)" (??0DataStream@astra@@QAE@PAU_astra_streamconnection@@@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_stream_start referenced in function "public: void __thiscall astra::DataStream::start(void)" (?start@DataStream@astra@@QAEXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_reader_open_frame referenced in function "public: class astra::Frame __thiscall astra::StreamReader::get_latest_frame(int)" (?get_latest_frame@StreamReader@astra@@QAE?AVFrame@2@H@Z)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_reader_close_frame referenced in function "public: __thiscall astra::Frame::FrameRef::~FrameRef(void)" (??1FrameRef@Frame@astra@@QAE@XZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_reader_register_frame_ready_callback referenced in function "private: void __thiscall astra::StreamReader::ReaderRef::ensure_callback_added(void)" (?ensure_callback_added@ReaderRef@StreamReader@astra@@AAEXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_reader_unregister_frame_ready_callback referenced in function "private: void __thiscall astra::StreamReader::ReaderRef::ensure_callback_removed(void)" (?ensure_callback_removed@ReaderRef@StreamReader@astra@@AAEXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp__astra_update referenced in function _main
+main.obj : error LNK2019: unresolved external symbol __imp__astra_imagestream_get_usb_info referenced in function "public: struct astra_usb_info_t __thiscall astra::ImageStream::usb_info(void)const " (?usb_info@ImageStream@astra@@QBE?AUastra_usb_info_t@@XZ)
+CStreamListener.obj : error LNK2019: unresolved external symbol __imp__astra_frame_get_handframe_with_subtype referenced in function "public: static class astra::HandFrame __cdecl astra::HandFrame::acquire<class astra::HandFrame>(struct _astra_reader_frame *,int)" (??$acquire@VHandFrame@astra@@@HandFrame@astra@@SA?AV01@PAU_astra_reader_frame@@H@Z)
+CStreamListener.obj : error LNK2019: unresolved external symbol __imp__astra_handframe_get_frameindex referenced in function "public: __thiscall astra::HandFrame::HandFrame(struct _astra_handframe *)" (??0HandFrame@astra@@QAE@PAU_astra_handframe@@@Z)
+CStreamListener.obj : error LNK2019: unresolved external symbol __imp__astra_handframe_get_hand_count referenced in function "public: __thiscall astra::HandFrame::HandFrame(struct _astra_handframe *)" (??0HandFrame@astra@@QAE@PAU_astra_handframe@@@Z)
+CStreamListener.obj : error LNK2019: unresolved external symbol __imp__astra_handframe_get_shared_hand_array referenced in function "private: void __thiscall astra::HandFrame::verify_handpoints(void)const " (?verify_handpoints@HandFrame@astra@@ABEXXZ)
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\astra_core.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\astra_core_api.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\astra.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\Plugins\openni_sensor.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\Plugins\orbbec_hand.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\Plugins\orbbec_xs.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\glew\glew32.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\glut\x64\freeglut.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\glfw3.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\lib\glfw3dll.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+C:\Users\dinok\Desktop\astra-joint-tracking-master\Debug\astra-joint-tracking.exe : fatal error LNK1120: 39 unresolved externals
