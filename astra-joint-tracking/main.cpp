@@ -77,7 +77,7 @@ private:
 			lastFrame = maskedColorFrame;
 			printf("%d, %d", lastFrame.height(), lastFrame.width());
 			//Mat image(480, 640, CV_8UC4 , (void *)lastFrame.data());
-			imwrite("astra.png", (void *)maskedColorFrame.data());
+			//imwrite("astra.png", (void *)maskedColorFrame.data());
 			//String windowName = "My HelloWorld Window"; //Name of the window
 
 			//namedWindow(windowName); // Create a window
