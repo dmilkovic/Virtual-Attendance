@@ -1,0 +1,10 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$main_8cpp.html#a481f39f0fb38238894d81473dc00c396" title="astraInit" alt="" coords="113,31,181,57"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a8fa46c712090f32f3df0e4ff98452ef7" title="setDrawing" alt="" coords="104,81,191,108"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#a98b1050f09da390896f964fb7a892391" title="Initialize" alt="" coords="241,5,311,32"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#a3d5cf0d8d37b6b17224867eb397c9a16" title="Draw" alt="" coords="251,56,301,83"/>
+<area shape="rect" id="node8" href="$main_8cpp.html#a4d7cf3cc6ec6b818e4d4395e156eecfb" title="keyboard" alt="" coords="239,107,313,133"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#a110590a16b0a238ed8f2d95fb20605b0" title="Timer" alt="" coords="249,157,303,184"/>
+<area shape="rect" id="node6" href="$class_astra_stream.html#a49ed0f06558c64c7a0ad14eed57fb4c1" title="AstraStream::getBodies" alt="" coords="361,31,523,57"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#a29bb261767ed8b9b60a95a7c4b57cfa1" title="drawLine" alt="" coords="405,81,479,108"/>
+</map>
