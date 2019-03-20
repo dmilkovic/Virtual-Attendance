@@ -44,7 +44,7 @@ using namespace cv;
 double w;
 double h;
 char strPoint[bufSize];
-bool hasNewData = false;
+bool hasNewData = false, doOnce = false;
 astra::MaskedColorFrame lastFrame = NULL;
 
 struct Points
@@ -56,6 +56,7 @@ struct Points
 
 class MaskedColorFrameListener : public astra::FrameListener
 {
+	int cnt = 0;
 public:
 	MaskedColorFrameListener(int maxFramesToProcess)
 		: maxFramesToProcess_(maxFramesToProcess)
@@ -75,7 +76,42 @@ private:
 			//printf("Frame: %d", framesProcessed_);
 			//std::cout << "Pozvan" << maskedColorFrame.height() <<std::endl;
 			lastFrame = maskedColorFrame;
-			printf("%d, %d", lastFrame.height(), lastFrame.width());
+			if (true)
+			{
+				/*Mat image;
+				image = depthframe2mat(maskedColorFrame);
+				imshow("MyWindow", image);*/
+
+				/*int width = lastFrame.width();
+				int height = lastFrame.height();
+				int grayval = 0;
+				Mat image(height, width, CV_8UC4);
+				
+				for (int y = 0; y < height; y++)
+				{
+					for (int x = 0; x < width; x++)
+					{
+						//grayval = lastframe.data()[x + y * width];
+						image.at<astra_rgba_pixel_t>(y, x) = lastFrame.data()[x + y * width];
+					}
+				}*/
+				
+				Mat my_frame = Mat(lastFrame.height(), lastFrame.width(), CV_8UC4, (void *)lastFrame.data());
+				//		cvtColor(lastFrame.data, lastFrame.data, CV_BGR2RGB); //this will put colors right
+			//	memcpy((void *)lastFrame.data(), imageBuffer, 4 * lastFrame.height()*lastFrame.width() * sizeof(uint8_t));
+				char imgName[100];
+				sprintf(imgName, "some%d.png", cnt);
+				printf("%s", imgName);
+				if(cnt % 100 == 0)
+				{ 
+					cv::imwrite(imgName, my_frame);
+				}
+				
+				//imshow("MyWindow", my_frame); 
+				//waitKey(1);
+				doOnce = true;
+				cnt++;
+			}
 			//Mat image(480, 640, CV_8UC4 , (void *)lastFrame.data());
 			//imwrite("astra.png", (void *)maskedColorFrame.data());
 			//String windowName = "My HelloWorld Window"; //Name of the window
@@ -99,6 +135,24 @@ private:
 			
 		isFinished_ = framesProcessed_ >= maxFramesToProcess_;
 	}
+
+	/*Mat depthframe2mat(astra::MaskedColorFrame lastframe)
+	{
+		int width = lastFrame.width();
+		int height = lastFrame.height();
+		int grayval = 0;
+		Mat image(height, width, CV_8UC4);
+
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				//grayval = lastframe.data()[x + y * width];
+				image.at<astra_rgba_pixel_t>(y, x) = lastframe.data()[x + y * width];
+			}
+		}
+		return image;
+	}*/
 
 	void print_depth_frame(const astra::MaskedColorFrame& depthFrame) const
 	{
@@ -348,8 +402,7 @@ int main(int iArgc, char **cppArgv)
 	std::cin >> var;
 	*/
 
-	Mat image = imread("horse.jpg");
-
+	/*Mat image = imread("horse.jpg");
 
 	if (image.empty()) // Check for failure
 	{
@@ -358,12 +411,14 @@ int main(int iArgc, char **cppArgv)
 		return -1;
 	}
 
+
 	String windowName = "My HelloWorld Window"; //Name of the window
 
 	namedWindow(windowName); // Create a window
 
 	imshow(windowName, image); // Show our image inside the created window.
-
+	waitKey(1);//NE BRISI
+	*/
 
 	if (var == 1)
 	{
