@@ -766,7 +766,7 @@ bool sendPoint(SOCKET sock, char* buffer, int len) // ili char len = 640 480 *4
 		return false;
 	}
 	_sleep(1);
-	printf("Broj: %d", ++sendCnt);
+	//printf("Broj: %d", ++sendCnt);
 	return true;
 }
 
@@ -875,7 +875,6 @@ void sendData()
 					
 					if (ifs)
 					{
-						std::cout << "ifs";
 						std::vector<char> dataToSend = std::vector<char>(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 
 						//If you really need it in a string you can initialize it the same way as the vector
@@ -884,18 +883,18 @@ void sendData()
 						//std::for_each(dataToSend.begin(), dataToSend.end(), [](char c) { std::cout << c; });
 
 						//std::cin.get();
-						if (!sendPoint(sock, "test", strlen("test")))
+						if (!sendPoint(sock, dataToSend.data(), dataToSend.size()))
 						{
 							//printf("Could not send point");
 							std::cout << "Could not send point";
 							break;
 						}
 						else {
-							std::cout << "poslano";
+							std::cout << dataToSend.data();
 							//printf("poslano");
 						}
 					}
-					else printf("ne");
+					
 
 
 					hasNewData = false;		// For checking if the tracking gave out some new data, so it stops sending if the tracking isn't being used}
