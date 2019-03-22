@@ -22,6 +22,10 @@
 #include "CAstraStream.h"
 #include "SocketTCP.hpp"
 
+#include <algorithm>
+#include <fstream>
+#include <vector>
+
 #define OFFSET 1.15
 #define bufSize 7//640*480*7//512
 #define nBodyparts 19
@@ -101,10 +105,12 @@ private:
 			//	memcpy((void *)lastFrame.data(), imageBuffer, 4 * lastFrame.height()*lastFrame.width() * sizeof(uint8_t));
 				char imgName[100];
 				sprintf(imgName, "some%d.png", cnt);
-				printf("%s", imgName);
+				//printf("%s", imgName);
 				if(cnt % 100 == 0)
-				{ 
+				{	
+					cv::cvtColor(my_frame, my_frame, cv::COLOR_BGRA2RGBA);
 					cv::imwrite(imgName, my_frame);
+
 				}
 				
 				//imshow("MyWindow", my_frame); 
@@ -823,19 +829,19 @@ void sendData()
 	do
 	{
 		Sleep(20);		// 1 message each 33ms is close to 30FPS
-		ZeroMemory(strPoint, bufSize);
+		//ZeroMemory(strPoint, bufSize);
 		if (hasNewData)
 		{
 			//lastFrame.acquire()
 
-			ZeroMemory(strPoint, bufSize);
-			for (int i = 0; i < lastFrame.height()*lastFrame.width() ; i++)
+			//ZeroMemory(strPoint, bufSize);
+			/*for (int i = 0; i < lastFrame.height()*lastFrame.width() ; i++)
 			{ 
-				/*ZeroMemory(strPoint, bufSize);
+				ZeroMemory(strPoint, bufSize);
 				for (int j = 0; j < slova_po_redu; j++)
 				{*/
 					//sprintf(strPoint + strlen(strPoint), "%d;%.0f;%.0f;%.0f;%.3f;%.3f;%.3f;%.3f;%.3f;%.3f ", i, points[i][0].x, points[i][0].y, points[i][0].z, points[i][1].x, points[i][1].y, points[i][1].z, points[i][2].x, points[i][2].y, points[i][2].z);
-					ZeroMemory(strPoint, bufSize);
+					/*ZeroMemory(strPoint, bufSize);
 					char red[2];
 					strcpy(red, dec2Hex((int)lastFrame.data()[i].r).c_str());
 					char green[2];
@@ -845,7 +851,7 @@ void sendData()
 					char alpha[2];
 					strcpy(alpha, dec2Hex((int)lastFrame.data()[i].alpha).c_str());
 
-					sprintf(strPoint + strlen(strPoint), "%c%c%c%c%c%c", red[0],red[1], green[0], green[1], blue[0], blue[1]/*, alpha[0], alpha[1]*/);
+					sprintf(strPoint + strlen(strPoint), "%c%c%c%c%c%c", red[0],red[1], green[0], green[1], blue[0], blue[1]/*, alpha[0], alpha[1]);
 					if (lastFrameIndex == lastFrame.frame_index())
 					{
 						sprintf(strPoint + strlen(strPoint), ";");
@@ -855,12 +861,43 @@ void sendData()
 						sprintf(strPoint + strlen(strPoint), "#");
 						lastFrameIndex = lastFrame.frame_index();
 					}
+					*/
+					Mat imageToSend = imread("horse.jpg");
 
-					if (!sendPoint(sock, strPoint, strlen(strPoint)))
+					if (imageToSend.empty()) // Check for failure
 					{
-						printf("Could not send point");
-						break;
+						cout << "Could not open or find the image" << endl;
+						//system("pause"); //wait for any key press
+						//return -1;
 					}
+
+					std::ifstream ifs("some400.png");
+					
+					if (ifs)
+					{
+						std::cout << "ifs";
+						std::vector<char> dataToSend = std::vector<char>(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+
+						//If you really need it in a string you can initialize it the same way as the vector
+						//std::string data2 = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+
+						//std::for_each(dataToSend.begin(), dataToSend.end(), [](char c) { std::cout << c; });
+
+						//std::cin.get();
+						if (!sendPoint(sock, "test", strlen("test")))
+						{
+							//printf("Could not send point");
+							std::cout << "Could not send point";
+							break;
+						}
+						else {
+							std::cout << "poslano";
+							//printf("poslano");
+						}
+					}
+					else printf("ne");
+
+
 					hasNewData = false;		// For checking if the tracking gave out some new data, so it stops sending if the tracking isn't being used}
 
 					
@@ -892,7 +929,7 @@ void sendData()
 					//strcpy(strPoint, buffer);
 
 				//std::cout << strPoint << "\n";
-			}
+			//}
 			
 		}
 		
