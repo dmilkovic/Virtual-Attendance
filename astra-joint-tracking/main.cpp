@@ -110,7 +110,6 @@ private:
 				{	
 					cv::cvtColor(my_frame, my_frame, cv::COLOR_BGRA2RGBA);
 					cv::imwrite(imgName, my_frame);
-
 				}
 				
 				//imshow("MyWindow", my_frame); 
@@ -402,6 +401,35 @@ void setDrawing(int *iArgc, char **cppArgv)
 int main(int iArgc, char **cppArgv)
 {
 	/*int var = 0;*/ int var = 1;
+
+
+
+	Mat image = imread("rocco.png", CV_8UC4);
+
+	std::vector<uchar> buffer;
+	#define MB 1024*1024
+	buffer.resize(200 * MB);
+	cv::imencode(".png", image, buffer);
+
+	Mat img = imdecode(buffer, -1);
+	imwrite("rocco2.png", img);
+
+	/*int size = image.total() * image.elemSize();
+	BYTE *bytes = new BYTE[size];  // you will have to delete[] that later
+	std::memcpy(bytes, image.data, size * sizeof(BYTE));
+
+	Mat img = Mat(640, 480, CV_8UC4, bytes).clone(); // make a copy
+	imwrite("rocco2.png", img);
+	/*vector<BYTE> v_char;
+	v_char.reserve(image.rows * image.cols);
+	for (int i = 0; i < image.rows; i++) {
+		int start = *image.data + i * image.step;
+		v_char.insert(v_char.end(), start, start + image.cols);
+	}
+
+	Mat img = imdecode(*v_char.data(), 0);
+	cv::imwrite("rocco2.png", img);*/
+
 	/*while (1)
 	{
 	std::cout << "Press 1 to start the camera and game, 2 to leave\n";
@@ -871,11 +899,16 @@ void sendData()
 						//return -1;
 					}
 
-					std::ifstream ifs("some400.png");
+				
+					/*cv::Mat imageWithData = cv::Mat(sizeof(v_char), 1, CV_8UC4, v_char.data()).clone();
+					Mat reshapedImage = imageWithData.reshape(0, 480);*/
+
+
+					/*std::ifstream ifs("rocco.png");
 					
 					if (ifs)
 					{
-						std::vector<char> dataToSend = std::vector<char>(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+						std::vector<byte> dataToSend = std::vector<byte>(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 
 						//If you really need it in a string you can initialize it the same way as the vector
 						//std::string data2 = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
@@ -893,7 +926,7 @@ void sendData()
 							std::cout << dataToSend.data();
 							//printf("poslano");
 						}
-					}
+					}*/
 					
 
 
