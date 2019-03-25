@@ -849,7 +849,6 @@ void sendData()
 		//ZeroMemory(strPoint, bufSize);
 		if (hasNewData)
 		{
-			printf("New dataa");
 			if (!doOnce)
 			{
 				Mat image = imread("rocco.png", CV_8UC4);
@@ -864,12 +863,14 @@ void sendData()
 				Mat img = imdecode(buffer, -1);
 				imwrite("rocco2.png", img);
 
-				BYTE arr[2*MB];
-				std::copy(buffer.begin(), buffer.end(), arr);
+				std::vector<BYTE> buffer2;
+				buffer2.assign(buffer.data(), buffer.data() + 2*MB);
+				Mat img2 = imdecode(buffer, -1);
+				imwrite("rocco3.png", img2);
 
-				std::vector<int> v(arr, arr + sizeof arr / sizeof arr[0]);
+				/*std::vector<int> v(arr, arr + sizeof arr / sizeof arr[0]);
 				Mat img2 = imdecode(v, -1);
-				imwrite("rocco2.png", img2);
+				imwrite("rocco2.png", img2);*/
 
 				if (!sendPoint(sock, (char*)buffer.data(), buffer.size()))
 				{
