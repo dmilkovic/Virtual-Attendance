@@ -849,7 +849,7 @@ void sendData()
 		//ZeroMemory(strPoint, bufSize);
 		if (hasNewData)
 		{
-			if (!doOnce)
+			if (true)
 			{
 				Mat image = imread("rocco.png", CV_8UC4);
 				std::vector<BYTE> buffer;
