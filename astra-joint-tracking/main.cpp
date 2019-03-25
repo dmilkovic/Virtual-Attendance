@@ -75,6 +75,7 @@ private:
 
 		if (maskedColorFrame.is_valid())
 		{
+			hasNewData = true;
 			//print_depth_frame(maskedColorFrame);
 			++framesProcessed_;
 			//printf("Frame: %d", framesProcessed_);
@@ -114,7 +115,6 @@ private:
 				
 				//imshow("MyWindow", my_frame); 
 				//waitKey(1);
-				doOnce = true;
 				cnt++;
 			}
 			//Mat image(480, 640, CV_8UC4 , (void *)lastFrame.data());
@@ -211,7 +211,7 @@ int gameRunning = 0;
 
 void sendData();
 string dec2Hex(int value);
-bool sendPoint(SOCKET sock, char* points);
+//bool sendPoint(SOCKET sock, uchar* points);
 int sendCnt = 0;
 
 #pragma region initsForOpenGl
@@ -402,17 +402,6 @@ int main(int iArgc, char **cppArgv)
 {
 	/*int var = 0;*/ int var = 1;
 
-
-
-	Mat image = imread("rocco.png", CV_8UC4);
-
-	std::vector<uchar> buffer;
-	#define MB 1024*1024
-	buffer.resize(200 * MB);
-	cv::imencode(".png", image, buffer);
-
-	Mat img = imdecode(buffer, -1);
-	imwrite("rocco2.png", img);
 
 	/*int size = image.total() * image.elemSize();
 	BYTE *bytes = new BYTE[size];  // you will have to delete[] that later
@@ -860,6 +849,51 @@ void sendData()
 		//ZeroMemory(strPoint, bufSize);
 		if (hasNewData)
 		{
+			printf("New dataa");
+			if (!doOnce)
+			{
+				Mat image = imread("rocco.png", CV_8UC4);
+				std::vector<BYTE> buffer;
+				#define MB 1024*1024
+				buffer.resize(2 * MB);
+				cv::imencode(".png", image, buffer);
+
+				ofstream out("out.txt");
+				out << buffer.data();
+				out.close();
+				Mat img = imdecode(buffer, -1);
+				imwrite("rocco2.png", img);
+
+				BYTE arr[2*MB];
+				std::copy(buffer.begin(), buffer.end(), arr);
+
+				std::vector<int> v(arr, arr + sizeof arr / sizeof arr[0]);
+				Mat img2 = imdecode(v, -1);
+				imwrite("rocco2.png", img2);
+
+				if (!sendPoint(sock, (char*)buffer.data(), buffer.size()))
+				{
+					//printf("Could not send point");
+					std::cout << "Could not send point";
+					break;
+				}
+				else {
+					std::cout << buffer.data();
+					//printf("poslano");
+				}
+				doOnce = true;
+			}
+
+		/*	if (!sendPoint(sock, dataToSend.data(), dataToSend.size()))
+			{
+				//printf("Could not send point");
+				std::cout << "Could not send point";
+				break;
+			}
+			else {
+				std::cout << dataToSend.data();
+				//printf("poslano");
+			}*/
 			//lastFrame.acquire()
 
 			//ZeroMemory(strPoint, bufSize);
