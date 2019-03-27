@@ -863,10 +863,10 @@ void sendData()
 				Mat img = imdecode(buffer, -1);
 				imwrite("rocco2.png", img);
 
-				std::vector<BYTE> buffer2;
+				/*std::vector<BYTE> buffer2;
 				buffer2.assign(buffer.data(), buffer.data() + 2*MB);
 				Mat img2 = imdecode(buffer, -1);
-				imwrite("rocco3.png", img2);
+				imwrite("rocco3.png", img2);*/
 
 				/*std::vector<int> v(arr, arr + sizeof arr / sizeof arr[0]);
 				Mat img2 = imdecode(v, -1);
@@ -880,7 +880,7 @@ void sendData()
 				}
 				else {
 					std::cout << buffer.data();
-					//printf("poslano");
+					printf("poslano");
 				}
 				doOnce = true;
 			}
