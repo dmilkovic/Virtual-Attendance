@@ -164,7 +164,7 @@ private:
 		const int frameIndex = depthFrame.frame_index();
 		const short middleValue = get_middle_value(depthFrame);
 
-		std::printf("Depth frameIndex: %d value: %d \n", frameIndex, middleValue);
+		//std::printf("Depth frameIndex: %d value: %d \n", frameIndex, middleValue);
 		std::cout << "Depth frameIndex: " << frameIndex << "value: \n" << middleValue << std::endl;
 	}
 
@@ -843,20 +843,20 @@ void sendData()
 
 
 	int lastFrameIndex = 1;
+	std::vector<BYTE> buffer;
+	#define MB 1024*1024
+	buffer.resize(2 * MB);
 	do
 	{
 		Sleep(20);		// 1 message each 33ms is close to 30FPS
 		//ZeroMemory(strPoint, bufSize);
+		
 		if (hasNewData)
 		{
 			if (true)
 			{
-				Mat image = imread("rocco.png", CV_8UC4);
-				std::vector<BYTE> buffer;
-				#define MB 1024*1024
-				buffer.resize(2 * MB);
+				Mat image = imread("rocco.png", CV_8UC4);	
 				cv::imencode(".png", image, buffer);
-
 				ofstream out("out.txt");
 				out << buffer.data();
 				out.close();
@@ -871,7 +871,7 @@ void sendData()
 				/*std::vector<int> v(arr, arr + sizeof arr / sizeof arr[0]);
 				Mat img2 = imdecode(v, -1);
 				imwrite("rocco2.png", img2);*/
-
+				printf("%d", buffer.size());
 				if (!sendPoint(sock, (char*)buffer.data(), buffer.size()))
 				{
 					//printf("Could not send point");
@@ -879,127 +879,16 @@ void sendData()
 					break;
 				}
 				else {
-					std::cout << buffer.data();
+					//std::cout << buffer.data();
 					printf("poslano");
 				}
-				doOnce = true;
+				buffer.clear();
 			}
-
-		/*	if (!sendPoint(sock, dataToSend.data(), dataToSend.size()))
-			{
-				//printf("Could not send point");
-				std::cout << "Could not send point";
-				break;
-			}
-			else {
-				std::cout << dataToSend.data();
-				//printf("poslano");
-			}*/
-			//lastFrame.acquire()
-
-			//ZeroMemory(strPoint, bufSize);
-			/*for (int i = 0; i < lastFrame.height()*lastFrame.width() ; i++)
-			{ 
-				ZeroMemory(strPoint, bufSize);
-				for (int j = 0; j < slova_po_redu; j++)
-				{*/
-					//sprintf(strPoint + strlen(strPoint), "%d;%.0f;%.0f;%.0f;%.3f;%.3f;%.3f;%.3f;%.3f;%.3f ", i, points[i][0].x, points[i][0].y, points[i][0].z, points[i][1].x, points[i][1].y, points[i][1].z, points[i][2].x, points[i][2].y, points[i][2].z);
-					/*ZeroMemory(strPoint, bufSize);
-					char red[2];
-					strcpy(red, dec2Hex((int)lastFrame.data()[i].r).c_str());
-					char green[2];
-					strcpy(green, dec2Hex((int)lastFrame.data()[i].g).c_str());
-					char blue[2];
-					strcpy(blue, dec2Hex((int)lastFrame.data()[i].b).c_str());
-					char alpha[2];
-					strcpy(alpha, dec2Hex((int)lastFrame.data()[i].alpha).c_str());
-
-					sprintf(strPoint + strlen(strPoint), "%c%c%c%c%c%c", red[0],red[1], green[0], green[1], blue[0], blue[1]/*, alpha[0], alpha[1]);
-					if (lastFrameIndex == lastFrame.frame_index())
-					{
-						sprintf(strPoint + strlen(strPoint), ";");
-					}
-					else
-					{
-						sprintf(strPoint + strlen(strPoint), "#");
-						lastFrameIndex = lastFrame.frame_index();
-					}
-					*/
-					Mat imageToSend = imread("horse.jpg");
-
-					if (imageToSend.empty()) // Check for failure
-					{
-						cout << "Could not open or find the image" << endl;
-						//system("pause"); //wait for any key press
-						//return -1;
-					}
-
-				
-					/*cv::Mat imageWithData = cv::Mat(sizeof(v_char), 1, CV_8UC4, v_char.data()).clone();
-					Mat reshapedImage = imageWithData.reshape(0, 480);*/
-
-
-					/*std::ifstream ifs("rocco.png");
 					
-					if (ifs)
-					{
-						std::vector<byte> dataToSend = std::vector<byte>(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
-
-						//If you really need it in a string you can initialize it the same way as the vector
-						//std::string data2 = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
-
-						//std::for_each(dataToSend.begin(), dataToSend.end(), [](char c) { std::cout << c; });
-
-						//std::cin.get();
-						if (!sendPoint(sock, dataToSend.data(), dataToSend.size()))
-						{
-							//printf("Could not send point");
-							std::cout << "Could not send point";
-							break;
-						}
-						else {
-							std::cout << dataToSend.data();
-							//printf("poslano");
-						}
-					}*/
-					
-
-
-					hasNewData = false;		// For checking if the tracking gave out some new data, so it stops sending if the tracking isn't being used}
-
-					
-					//strcpy(strPoint, lastFrame.data);
-
-					//string s = 
-					//int_hex(7);
-					//cout << dec2Hex(7);
-					//printf("%s", s);
-				//}
-
-				//polje koje ima duzinu visina*širna*broj px, u tom polju for petlju
-				//
-				//	astra::RgbaPixel *buffer = new astra::RgbaPixel[640 * 480 * 4]();
-				//	lastFrame.copy_to(buffer);
-
-					/*for (int i = 0; i < 640; i++)
-					{
-						/*strPoint[i * 4] = (int)lastFrame.data()[i].r;
-						strPoint[i * 4 + 1] = (int)lastFrame.data()[i].g;
-						strPoint[i * 4 + 2] = (int)lastFrame.data()[i].b;
-						strPoint[i * 4 + 3] = (int)lastFrame.data()[i].alpha;
-						auto dataToSend = *lastFrame.data();
-						std::cout << "datatoSend" << (int)dataToSend.r << std::endl;
-						printf("%d%d%d%d", (int)lastFrame.data()[i].r, (int)lastFrame.data()[i].g, (int)lastFrame.data()[i].b, (int)lastFrame.data()[i].alpha);
-						sprintf(strPoint + strlen(strPoint), "%d%d%d%d", (int)lastFrame.data()[i].r, (int)lastFrame.data()[i].g, (int)lastFrame.data()[i].b, (int)lastFrame.data()[i].alpha);
-					}*/
-					//std::cout << "Pozvan" << strPoint[9] << std::endl;
-					//strcpy(strPoint, buffer);
-
-				//std::cout << strPoint << "\n";
-			//}
-			
+			hasNewData = false;		// For checking if the tracking gave out some new data, so it stops sending if the tracking isn't being used}		
 		}
 		
+
 	} while (gameRunning);
 	// Gracefully close down everything
 	closesocket(sock);
