@@ -50,6 +50,7 @@ double h;
 char strPoint[bufSize];
 bool hasNewData = false, doOnce = false;
 astra::MaskedColorFrame lastFrame = NULL;
+int frameCnt = 0;
 
 struct Points
 {
@@ -60,7 +61,6 @@ struct Points
 
 class MaskedColorFrameListener : public astra::FrameListener
 {
-	int cnt = 0;
 public:
 	MaskedColorFrameListener(int maxFramesToProcess)
 		: maxFramesToProcess_(maxFramesToProcess)
@@ -105,9 +105,9 @@ private:
 				//		cvtColor(lastFrame.data, lastFrame.data, CV_BGR2RGB); //this will put colors right
 			//	memcpy((void *)lastFrame.data(), imageBuffer, 4 * lastFrame.height()*lastFrame.width() * sizeof(uint8_t));
 				char imgName[100];
-				sprintf(imgName, "some%d.png", cnt);
+				sprintf(imgName, "some%d.png", frameCnt);
 				//printf("%s", imgName);
-				if(cnt % 100 == 0)
+				if(frameCnt % 100 == 0)
 				{	
 					cv::cvtColor(my_frame, my_frame, cv::COLOR_BGRA2RGBA);
 					cv::imwrite(imgName, my_frame);
@@ -115,7 +115,7 @@ private:
 				
 				//imshow("MyWindow", my_frame); 
 				//waitKey(1);
-				cnt++;
+				frameCnt++;
 			}
 			//Mat image(480, 640, CV_8UC4 , (void *)lastFrame.data());
 			//imwrite("astra.png", (void *)maskedColorFrame.data());
@@ -595,7 +595,7 @@ void Draw()
 			auto yi = joints[i].world_position().y / 100;
 			auto zi = -joints[i].world_position().z / 100;
 
-			points[i][0].x = joints[i].world_position().x;
+			points[i][0].x = joints[i].world_position().x;	
 			points[i][0].y = joints[i].world_position().y;
 			points[i][0].z = joints[i].world_position().z;
 			hasNewData = true;
@@ -853,15 +853,43 @@ void sendData()
 		
 		if (hasNewData)
 		{
+			
 			if (true)
-			{
-				Mat image = imread("rocco.png", CV_8UC4);	
+			{ 
+				char imgName[100];
+				
+				/*if (imgName == "")
+				{
+					sprintf(imgName, "rocco.png");
+				}*/
+				/*if (frameCnt > 0 && frameCnt % 100 == 0)
+				{
+					sprintf(imgName, "some%d.png", frameCnt-100);
+					printf("imgName: %d\n", frameCnt);		
+				}
+				else {
+					sprintf(imgName, "rocco.png");
+				}*/
+				Mat image;
+				if (frameCnt % 2 == 0) {
+					image = imread("rocco.png", CV_8UC4);
+				}
+				else
+				{
+					image = imread("rocco2.png", CV_8UC4);
+				}
+				cv::imencode(".png", image, buffer);
+				/*ofstream out("out.txt");
+				out << buffer.data();
+				out.close();*/
+		
+				/*Mat image = imread("rocco.png", CV_8UC4);	
 				cv::imencode(".png", image, buffer);
 				ofstream out("out.txt");
 				out << buffer.data();
 				out.close();
 				Mat img = imdecode(buffer, -1);
-				imwrite("rocco2.png", img);
+				imwrite("rocco2.png", img);*/
 
 				/*std::vector<BYTE> buffer2;
 				buffer2.assign(buffer.data(), buffer.data() + 2*MB);
