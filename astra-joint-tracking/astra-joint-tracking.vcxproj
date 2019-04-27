@@ -22,7 +22,7 @@
     <ProjectGuid>{5B61E2FC-E20E-4952-B295-5A9382C81059}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>astrajointtracking</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
