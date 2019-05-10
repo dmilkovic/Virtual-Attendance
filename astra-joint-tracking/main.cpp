@@ -213,6 +213,8 @@ void sendData();
 string dec2Hex(int value);
 //bool sendPoint(SOCKET sock, uchar* points);
 int sendCnt = 0;
+//slika koja se šalje
+Mat image;
 
 #pragma region initsForOpenGl
 
@@ -853,15 +855,11 @@ void sendData()
 		
 		if (hasNewData)
 		{
-			
 			if (true)
 			{ 
 				char imgName[100];
-				
-				/*if (imgName == "")
-				{
-					sprintf(imgName, "rocco.png");
-				}*/
+				Mat image;
+
 				/*if (frameCnt > 0 && frameCnt % 100 == 0)
 				{
 					sprintf(imgName, "some%d.png", frameCnt-100);
@@ -870,7 +868,15 @@ void sendData()
 				else {
 					sprintf(imgName, "rocco.png");
 				}*/
-				Mat image;
+
+			/*	if (frameCnt >= 100 && frameCnt % 100 == 0)
+				{
+					sprintf(imgName, "some%d.png", frameCnt-100);
+					image = imread(imgName, CV_8UC4);
+				}
+				else{
+					image = imread("rocco.png", CV_8UC4);
+				}*/
 				if (frameCnt % 2 == 0) {
 					image = imread("rocco.png", CV_8UC4);
 				}
