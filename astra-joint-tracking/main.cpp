@@ -52,6 +52,9 @@ bool hasNewData = false, doOnce = false;
 astra::MaskedColorFrame lastFrame = NULL;
 int frameCnt = 0;
 
+//slika koja se šalje
+Mat image = Mat();
+
 struct Points
 {
 	float x;
@@ -72,7 +75,6 @@ private:
 	void on_frame_ready(astra::StreamReader& reader,astra::Frame& frame) override
 	{
 		astra::MaskedColorFrame maskedColorFrame = frame.get<astra::MaskedColorFrame>();
-
 		if (maskedColorFrame.is_valid())
 		{
 			hasNewData = true;
@@ -81,6 +83,7 @@ private:
 			//printf("Frame: %d", framesProcessed_);
 			//std::cout << "Pozvan" << maskedColorFrame.height() <<std::endl;
 			lastFrame = maskedColorFrame;
+
 			if (true)
 			{
 				/*Mat image;
@@ -102,6 +105,7 @@ private:
 				}*/
 				
 				Mat my_frame = Mat(lastFrame.height(), lastFrame.width(), CV_8UC4, (void *)lastFrame.data());
+
 				//		cvtColor(lastFrame.data, lastFrame.data, CV_BGR2RGB); //this will put colors right
 			//	memcpy((void *)lastFrame.data(), imageBuffer, 4 * lastFrame.height()*lastFrame.width() * sizeof(uint8_t));
 				char imgName[100];
@@ -111,6 +115,7 @@ private:
 				{	
 					cv::cvtColor(my_frame, my_frame, cv::COLOR_BGRA2RGBA);
 					cv::imwrite(imgName, my_frame);
+					image = my_frame;
 				}
 				
 				//imshow("MyWindow", my_frame); 
@@ -213,8 +218,6 @@ void sendData();
 string dec2Hex(int value);
 //bool sendPoint(SOCKET sock, uchar* points);
 int sendCnt = 0;
-//slika koja se šalje
-Mat image;
 
 #pragma region initsForOpenGl
 
@@ -778,7 +781,7 @@ void astraInit()
 //Send points through socket
 bool sendPoint(SOCKET sock, char* buffer, int len) // ili char len = 640 480 *4
 {
-
+	printf("pozvan %d", len);
 	int sendResult = send(sock, buffer, len, 0);
 	if (sendResult == SOCKET_ERROR)
 	{
@@ -794,7 +797,7 @@ bool sendPoint(SOCKET sock, char* buffer, int len) // ili char len = 640 480 *4
 void sendData()
 {
 	//wait for tracking to kick in
-	/*Sleep(5000);*/
+	//Sleep(5000);
 	
 	string ipAddress = "127.0.0.1";     // IP Address of the server (localhost)
 	int port = 54000;           // Listening port # on the server
@@ -848,17 +851,17 @@ void sendData()
 	std::vector<BYTE> buffer;
 	#define MB 1024*1024
 	buffer.resize(2 * MB);
+	int counter = 0;
 	do
 	{
 		Sleep(20);		// 1 message each 33ms is close to 30FPS
 		//ZeroMemory(strPoint, bufSize);
 		
-		if (hasNewData)
-		{
-			if (true)
-			{ 
+		//if (hasNewData)
+		//{
+				printf("EVO\n");
 				char imgName[100];
-				Mat image;
+				//Mat image;
 
 				/*if (frameCnt > 0 && frameCnt % 100 == 0)
 				{
@@ -871,20 +874,37 @@ void sendData()
 
 			/*	if (frameCnt >= 100 && frameCnt % 100 == 0)
 				{
-					sprintf(imgName, "some%d.png", frameCnt-100);
+					sprintf(imgName, "some%d.png", frameCnt		-100);
 					image = imread(imgName, CV_8UC4);
 				}
 				else{
 					image = imread("rocco.png", CV_8UC4);
 				}*/
-				if (frameCnt % 2 == 0) {
+			/*	if (counter == 0) {
 					image = imread("rocco.png", CV_8UC4);
+					printf("rocco");
+					counter++;
 				}
-				else
+				else if(counter == 1)
 				{
-					image = imread("rocco2.png", CV_8UC4);
+					image = imread("drazzeno.png", CV_8UC4);
+					printf("drazzeno");
+					counter++;
 				}
-				cv::imencode(".png", image, buffer);
+				else {
+					image = imread("drazzeno2.png", CV_8UC4);
+					printf("ostalo");
+					counter = 0;
+				}*/
+				try
+				{
+					cv::imencode(".png", image, buffer);
+				}
+				catch (const std::exception&)
+				{
+					printf("OOOF");
+				}
+
 				/*ofstream out("out.txt");
 				out << buffer.data();
 				out.close();*/
@@ -905,7 +925,7 @@ void sendData()
 				/*std::vector<int> v(arr, arr + sizeof arr / sizeof arr[0]);
 				Mat img2 = imdecode(v, -1);
 				imwrite("rocco2.png", img2);*/
-				printf("%d", buffer.size());
+				//printf("Size: %d", buffer.size());
 				if (!sendPoint(sock, (char*)buffer.data(), buffer.size()))
 				{
 					//printf("Could not send point");
@@ -917,10 +937,11 @@ void sendData()
 					printf("poslano");
 				}
 				buffer.clear();
-			}
+				//counter++;
+			
 					
 			hasNewData = false;		// For checking if the tracking gave out some new data, so it stops sending if the tracking isn't being used}		
-		}
+		//}
 		
 
 	} while (gameRunning);
