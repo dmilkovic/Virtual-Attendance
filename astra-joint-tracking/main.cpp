@@ -86,83 +86,19 @@ private:
 
 			if (true)
 			{
-				/*Mat image;
-				image = depthframe2mat(maskedColorFrame);
-				imshow("MyWindow", image);*/
-
-				/*int width = lastFrame.width();
-				int height = lastFrame.height();
-				int grayval = 0;
-				Mat image(height, width, CV_8UC4);
-				
-				for (int y = 0; y < height; y++)
-				{
-					for (int x = 0; x < width; x++)
-					{
-						//grayval = lastframe.data()[x + y * width];
-						image.at<astra_rgba_pixel_t>(y, x) = lastFrame.data()[x + y * width];
-					}
-				}*/
 				
 				Mat my_frame = Mat(lastFrame.height(), lastFrame.width(), CV_8UC4, (void *)lastFrame.data());
-
-				//		cvtColor(lastFrame.data, lastFrame.data, CV_BGR2RGB); //this will put colors right
-			//	memcpy((void *)lastFrame.data(), imageBuffer, 4 * lastFrame.height()*lastFrame.width() * sizeof(uint8_t));
-				char imgName[100];
-				sprintf(imgName, "some%d.png", frameCnt);
-				//printf("%s", imgName);
-				if(frameCnt % 100 == 0)
-				{	
-					cv::cvtColor(my_frame, my_frame, cv::COLOR_BGRA2RGBA);
-					cv::imwrite(imgName, my_frame);
-					image = my_frame;
-				}
-				
+				cv::cvtColor(my_frame, my_frame, cv::COLOR_BGRA2RGBA);
+				image = my_frame;
 				//imshow("MyWindow", my_frame); 
 				//waitKey(1);
 				frameCnt++;
 			}
-			//Mat image(480, 640, CV_8UC4 , (void *)lastFrame.data());
-			//imwrite("astra.png", (void *)maskedColorFrame.data());
-			//String windowName = "My HelloWorld Window"; //Name of the window
-
-			//namedWindow(windowName); // Create a window
-
-		//	imshow(windowName, image); // Show our image inside the created window.
-			/*std::cout << "RGB: " << maskedColorFrame.handle()->metadata.pixelFormat<< std::endl;
-			for (auto it = 0; it != 500; ++it)
-			{
-				std::cout << "Frame index: "<< maskedColorFrame.frame_index() <<"Index:" << it << std::endl;
-				std::cout << "Alpha." << static_cast< int >(maskedColorFrame.data()[it].alpha) << std::endl;
-				std::cout << "R" << static_cast< int >(maskedColorFrame.data()[it].r) << std::endl;
-				std::cout << "G" << static_cast< int >(maskedColorFrame.data()[it].g) << std::endl;
-				std::cout << "B" << static_cast< int >(maskedColorFrame.data()[it].b) << std::endl;
-
-			}*/
-			
-			//for(int i = 0; i < sizeof(maskedColorFrame.copy_to()
 		}
 			
 		isFinished_ = framesProcessed_ >= maxFramesToProcess_;
 	}
 
-	/*Mat depthframe2mat(astra::MaskedColorFrame lastframe)
-	{
-		int width = lastFrame.width();
-		int height = lastFrame.height();
-		int grayval = 0;
-		Mat image(height, width, CV_8UC4);
-
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				//grayval = lastframe.data()[x + y * width];
-				image.at<astra_rgba_pixel_t>(y, x) = lastframe.data()[x + y * width];
-			}
-		}
-		return image;
-	}*/
 
 	void print_depth_frame(const astra::MaskedColorFrame& depthFrame) const
 	{
@@ -179,9 +115,6 @@ private:
 		const int height = depthFrame.height();
 
 		const size_t middleIndex = ((width * (height / 2.f)) + (width / 2.f));
-
-	//	const short* frameData = depthFrame.data();
-	//	const short middleValue = frameData[middleIndex];
 		const short middleValue = 2;
 
 		return middleValue;
@@ -195,20 +128,6 @@ private:
 
 
 MaskedColorFrameListener listener(100);
-
-/*class MaskedColorFrameListener : public astra::FrameListener
-{
-	virtual void on_frame_ready(astra::StreamReader& reader, astra::Frame& frame) override
-	{
-		const astra::MaskedColorFrame maskedColorFrame = frame.get<astra::MaskedColorFrame>();
-
-		if (maskedColorFrame.is_valid())
-		{
-			// do all the things
-			std::cout << "Evo framea";
-		}
-	}
-};*/
 
 struct Points points[nBodyparts][3];
 /// Control variable - user must choose '1' from menu to start the stream
