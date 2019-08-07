@@ -325,48 +325,6 @@ void setDrawing(int *iArgc, char **cppArgv)
 int main(int iArgc, char **cppArgv)
 {
 	/*int var = 0;*/ int var = 1;
-
-
-	/*int size = image.total() * image.elemSize();
-	BYTE *bytes = new BYTE[size];  // you will have to delete[] that later
-	std::memcpy(bytes, image.data, size * sizeof(BYTE));
-
-	Mat img = Mat(640, 480, CV_8UC4, bytes).clone(); // make a copy
-	imwrite("rocco2.png", img);
-	/*vector<BYTE> v_char;
-	v_char.reserve(image.rows * image.cols);
-	for (int i = 0; i < image.rows; i++) {
-		int start = *image.data + i * image.step;
-		v_char.insert(v_char.end(), start, start + image.cols);
-	}
-
-	Mat img = imdecode(*v_char.data(), 0);
-	cv::imwrite("rocco2.png", img);*/
-
-	/*while (1)
-	{
-	std::cout << "Press 1 to start the camera and game, 2 to leave\n";
-	std::cin >> var;
-	*/
-
-	/*Mat image = imread("horse.jpg");
-
-	if (image.empty()) // Check for failure
-	{
-		cout << "Could not open or find the image" << endl;
-		system("pause"); //wait for any key press
-		return -1;
-	}
-
-
-	String windowName = "My HelloWorld Window"; //Name of the window
-
-	namedWindow(windowName); // Create a window
-
-	imshow(windowName, image); // Show our image inside the created window.
-	waitKey(1);//NE BRISI
-	*/
-
 	if (var == 1)
 	{
 		gameRunning = 1;
@@ -398,23 +356,12 @@ int main(int iArgc, char **cppArgv)
 			t1.join();
 		}
 		var = 0;
-		/*}
-		else if (var == 2)
-		{
-		break;
-		}*/
 	}
 	return 0;
 }
 
 void drawLine(float x1, float y1, /*float z1, */float x2, float y2/*, float z2*/)
 {
-
-	/*x1 += 320.0;
-	x2 += 320.0;
-	y1 += 240.0;
-	y2 += 240.0;*/
-
 	glBegin(GL_LINES);
 	glVertex2f(x1, h - y1/*, -z1*/);
 	glVertex2f(x2, h - y2/*, -z2*/);
@@ -423,23 +370,6 @@ void drawLine(float x1, float y1, /*float z1, */float x2, float y2/*, float z2*/
 
 void Draw()
 {
-	/*
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//brise ekran
-	glMatrixMode(GL_MODELVIEW);
-	light();
-	glLoadIdentity();
-	gluLookAt(0.0, 0.0, 1500.0, //gdje je kamera (eye)
-	0.0, 0.0, 1.0, //gdje gledamo (center)
-	0.0f, 1.0f, 0.0f); //up-vektor (up)
-	*/
-	//std::cout << "Ovo je tip: " << maskColorFrame.stream_type << std::endl;
-
-	//do {
-	//astra_update();
-	//} while (!listener.is_finished());
-
-
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear color and depth buffers
 	glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
 
@@ -448,20 +378,7 @@ void Draw()
 	auto bodies = stream.getBodies();
 	auto nearestPoint = stream.m_nearestPoint;
 
-	//glClear(GL_COLOR_BUFFER_BIT); // clear display window
-
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
-
 	glPointSize(5.0f);
-
-	/*glBegin(GL_POINTS);
-	glColor3f(1.0, 1.0, 1.0);
-	glVertex2i(nearestPoint->x, nearestPoint->y);
-	glEnd();*/
-
-	//std::cout << stream.m_pointFrame.length() << std::endl;
-
 	for (auto body : bodies)
 	{
 		auto joints = body.joints();
@@ -782,101 +699,52 @@ void sendData()
 	int lastFrameIndex = 1;
 	std::vector<BYTE> buffer;
 	#define MB 1024*1024
-	//buffer.resize(2 * MB);
-	//buffer.resize(1024*700);
-	
 	int counter = 0;
 	do
 	{
-		//Sleep(20);		// 1 message each 33ms is close to 30FPS
 		Sleep(33);		// 1 message each 33ms is close to 30FPS
-		//ZeroMemory(strPoint, bufSize);
-		
-		//if (hasNewData)
-		//{
-	//	int suma = image.total() * image.elemSize();
 		printf("EVo %d i %d \n", image.step[0], image.rows);
-				char imgName[100];
-				//Mat image;
+		char imgName[100];
+		try
+		{
+			cv::imencode(".png", image, buffer);
+		}
+		catch (const std::exception&)
+		{
+			printf("OOOF");
+		}
 
-				/*if (frameCnt > 0 && frameCnt % 100 == 0)
-				{
-					sprintf(imgName, "some%d.png", frameCnt-100);
-					printf("imgName: %d\n", frameCnt);		
-				}
-				else {
-					sprintf(imgName, "rocco.png");
-				}*/
+		char ascii_str[] = "image_end";
+		int len = strlen(ascii_str);
+		BYTE arr[9];
+		int i;
 
-			/*	if (frameCnt >= 100 && frameCnt % 100 == 0)
-				{
-					sprintf(imgName, "some%d.png", frameCnt		-100);
-					image = imread(imgName, CV_8UC4);
-				}
-				else{
-					image = imread("rocco.png", CV_8UC4);
-				}*/
-			/*	if (counter == 0) {
-					image = imread("rocco.png", CV_8UC4);
-					printf("rocco");
-					counter++;
-				}
-				else if(counter == 1)
-				{
-					image = imread("drazzeno.png", CV_8UC4);
-					printf("drazzeno");
-					counter++;
-				}
-				else {
-					image = imread("drazzeno2.png", CV_8UC4);
-					printf("ostalo");
-					counter = 0;
-				}*/
-				try
-				{
-					cv::imencode(".png", image, buffer);
-				}
-				catch (const std::exception&)
-				{
-					printf("OOOF");
-				}
-
-				char ascii_str[] = "image_end";
-				int len = strlen(ascii_str);
-				BYTE arr[9];
-				int i;
-
-				//converting string to BYTE[]
-				string2ByteArray(ascii_str, arr);
+		//converting string to BYTE[]
+		string2ByteArray(ascii_str, arr);
 	
-				/*std::vector<BYTE> bufferSend;
-				bufferSend = buffer;*/
-				buffer.push_back(arr[0]);
-				buffer.push_back(arr[1]);
-				buffer.push_back(arr[2]);
-				buffer.push_back(arr[3]);
-				buffer.push_back(arr[4]);
-				buffer.push_back(arr[5]);
-				buffer.push_back(arr[6]);
-				buffer.push_back(arr[7]);
-				buffer.push_back(arr[8]);
-			//	Array.Copy(EndOfMessage, 0, BytesToSend, ImageBytes.Length, EndOfMessage.Length);
-				if (!sendPoint(sock, (char*)buffer.data(), buffer.size()))
-				{
-					//printf("Could not send point");
-					std::cout << "Could not send point";
-					break;
-				}
-				else {
-					//std::cout << buffer.data();
-					printf("poslano");
-				}
-				buffer.clear();
-				//counter++;
-			
+		buffer.push_back(arr[0]);
+		buffer.push_back(arr[1]);
+		buffer.push_back(arr[2]);
+		buffer.push_back(arr[3]);
+		buffer.push_back(arr[4]);
+		buffer.push_back(arr[5]);
+		buffer.push_back(arr[6]);
+		buffer.push_back(arr[7]);
+		buffer.push_back(arr[8]);
+
+		if (!sendPoint(sock, (char*)buffer.data(), buffer.size()))
+		{
+			//printf("Could not send point");
+			std::cout << "Could not send point";
+			break;
+		}
+		else {
+			//std::cout << buffer.data();
+			printf("poslano");
+		}
+		buffer.clear();	
 					
-			hasNewData = false;		// For checking if the tracking gave out some new data, so it stops sending if the tracking isn't being used}		
-		//}
+		hasNewData = false;		// For checking if the tracking gave out some new data, so it stops sending if the tracking isn't being used}		
 		
 
 	} while (gameRunning);
@@ -884,59 +752,3 @@ void sendData()
 	closesocket(sock);
 	WSACleanup();
 }
-
-
-
-string dec2Hex(int dec)
-{
-	/*string s = "";
-	if (value == 0)
-		return s;
-
-	int rem = value % 16;
-	value /= 16;
-	dec2Hex(value); //first execute recurency and print next value
-
-					  //after return print the less significant digit
-	if (rem > 9)
-		//cout << (char)(rem - 10 + 'A');
-		s += (char)(rem - 10 + 'A');
-	else
-		//cout << rem;
-		s += rem;*/
-	string s = "";
-	int rem;
-	while (dec > 0)   // Do this whilst the quotient is greater than 0.
-	{
-		rem = dec % 16; // Get the remainder.
-		if (rem > 9)
-		{
-			// Map the character given that the remainder is greater than 9.
-			switch (rem)
-			{
-			case 10: s = "A" + s; break;
-			case 11: s = "B" + s; break;
-			case 12: s = "C" + s; break;
-			case 13: s = "D" + s; break;
-			case 14: s = "E" + s; break;
-			case 15: s = "F" + s; break;
-			}
-		}
-		else
-		{
-			s = char(rem + 48) + s; // Converts integer (0-9) to ASCII code.
-									// x + 48 is the ASCII code for x digit (if 0 <= x <= 9)
-		}
-		dec = dec / 16;
-	}
-	if (s == "") // if the number was 0, the string will remain empty
-		//cout << "0";
-		return s;
-	else if (dec < 16)
-		return "0" + s;
-	else
-		//cout << s;
-		return s;
-	
-}
-
