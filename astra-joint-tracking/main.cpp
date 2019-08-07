@@ -711,14 +711,27 @@ bool sendPoint(SOCKET sock, char* buffer, int len) // ili char len = 640 480 *4
 	return true;
 }
 
+void string2ByteArray(char* input, BYTE* output)
+{
+	int loop;
+	int i;
+
+	loop = 0;
+	i = 0;
+
+	while (input[loop] != '\0')
+	{
+		output[i++] = input[loop++];
+	}
+}
 
 
 void sendData()
 {
 	//wait for tracking to kick in
 	//Sleep(5000);
-	
-	string ipAddress = "127.0.0.1";     // IP Address of the server (localhost)
+	//string ipAddress = "127.0.0.1";     // IP Address of the server (localhost)
+	string ipAddress = "192.168.1.18";
 	int port = 54000;           // Listening port # on the server
 	auto bodies = stream.getBodies();
 	auto joints = bodies[0].joints();
@@ -769,16 +782,20 @@ void sendData()
 	int lastFrameIndex = 1;
 	std::vector<BYTE> buffer;
 	#define MB 1024*1024
-	buffer.resize(2 * MB);
+	//buffer.resize(2 * MB);
+	//buffer.resize(1024*700);
+	
 	int counter = 0;
 	do
 	{
-		Sleep(20);		// 1 message each 33ms is close to 30FPS
+		//Sleep(20);		// 1 message each 33ms is close to 30FPS
+		Sleep(33);		// 1 message each 33ms is close to 30FPS
 		//ZeroMemory(strPoint, bufSize);
 		
 		//if (hasNewData)
 		//{
-				printf("EVO\n");
+	//	int suma = image.total() * image.elemSize();
+		printf("EVo %d i %d \n", image.step[0], image.rows);
 				char imgName[100];
 				//Mat image;
 
@@ -824,27 +841,26 @@ void sendData()
 					printf("OOOF");
 				}
 
-				/*ofstream out("out.txt");
-				out << buffer.data();
-				out.close();*/
-		
-				/*Mat image = imread("rocco.png", CV_8UC4);	
-				cv::imencode(".png", image, buffer);
-				ofstream out("out.txt");
-				out << buffer.data();
-				out.close();
-				Mat img = imdecode(buffer, -1);
-				imwrite("rocco2.png", img);*/
+				char ascii_str[] = "image_end";
+				int len = strlen(ascii_str);
+				BYTE arr[9];
+				int i;
 
-				/*std::vector<BYTE> buffer2;
-				buffer2.assign(buffer.data(), buffer.data() + 2*MB);
-				Mat img2 = imdecode(buffer, -1);
-				imwrite("rocco3.png", img2);*/
-
-				/*std::vector<int> v(arr, arr + sizeof arr / sizeof arr[0]);
-				Mat img2 = imdecode(v, -1);
-				imwrite("rocco2.png", img2);*/
-				//printf("Size: %d", buffer.size());
+				//converting string to BYTE[]
+				string2ByteArray(ascii_str, arr);
+	
+				/*std::vector<BYTE> bufferSend;
+				bufferSend = buffer;*/
+				buffer.push_back(arr[0]);
+				buffer.push_back(arr[1]);
+				buffer.push_back(arr[2]);
+				buffer.push_back(arr[3]);
+				buffer.push_back(arr[4]);
+				buffer.push_back(arr[5]);
+				buffer.push_back(arr[6]);
+				buffer.push_back(arr[7]);
+				buffer.push_back(arr[8]);
+			//	Array.Copy(EndOfMessage, 0, BytesToSend, ImageBytes.Length, EndOfMessage.Length);
 				if (!sendPoint(sock, (char*)buffer.data(), buffer.size()))
 				{
 					//printf("Could not send point");
@@ -868,6 +884,8 @@ void sendData()
 	closesocket(sock);
 	WSACleanup();
 }
+
+
 
 string dec2Hex(int dec)
 {
