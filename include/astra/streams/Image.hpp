@@ -292,7 +292,7 @@ namespace astra {
 
     private:
         void throw_if_invalid_frame() const
-        {
+	        {
             if (!imageFrame_) { throw std::logic_error("Cannot operate on an invalid frame"); }
         }
 
